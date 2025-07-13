@@ -1,0 +1,65 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Linker files
+*.ilk
+
+# Debugger Files
+*.pdb
+*.dwo
+
+# Compiled Libraries
+*.so
+*.dylib
+*.dll
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# vcpkg
+vcpkg/
+vcpkg_installed/
+vcpkg*.log
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.cache
+*.db
+*.VC.db
+*.VC.opendb
+*.ipch
+*.tlog
+*.lastbuildstate
+*.log
+*.opensdf
+*.sln.docstates
+
+# Build output
+x64/
+Debug/
+Release/
+build/
+bin/
+lib/
+
+# System files
+Thumbs.db
+.DS_Store
