@@ -5,23 +5,31 @@
 
 using boost::asio::ip::tcp;
 
+
+using default_token = boost::asio::as_tuple_t<boost::asio::use_awaitable_t<>>;
+using tcp_acceptor = default_token::as_default_on_t<tcp::acceptor>;
+using tcp_socket = default_token::as_default_on_t<tcp::socket>;
+
 #if defined(BOOST_ASIO_ENABLE_HANDLER_TRACKING)
 # define use_awaitable \
   boost::asio::use_awaitable_t(__FILE__, __LINE__, __PRETTY_FUNCTION__)
 #endif
 
-boost::asio::awaitable<void> echo(tcp::socket socket)
+boost::asio::awaitable<void> echo(tcp_socket socket)
 {
 	try
 	{
 		char data[1024];
 		for (;;)
 		{
-			std::size_t n = co_await socket.async_read_some(boost::asio::buffer(data), boost::asio::use_awaitable);
-			std::string response(data, n);
+			auto [read_error, nread] = co_await socket.async_read_some(boost::asio::buffer(data));
+			if (nread == 0)
+				break;
+
+			std::string response(data, nread);
 			response = "\r\n response: " + response + "\r\n";
 			
-			co_await async_write(socket, boost::asio::buffer(response), boost::asio::use_awaitable);
+			auto [write_error, nwritten] = co_await async_write(socket, boost::asio::buffer(response, response.size()));
 		}
 	}
 	catch (std::exception& e)
@@ -33,12 +41,13 @@ boost::asio::awaitable<void> echo(tcp::socket socket)
 boost::asio::awaitable<void> listener(boost::asio::ip::port_type port)
 {
 	auto executor = co_await boost::asio::this_coro::executor;
-	tcp::acceptor acceptor(executor, { tcp::v4(), port });
+	tcp_acceptor acceptor(executor, { tcp::v4(), port });
 
 	for (;;)
 	{
-		tcp::socket socket = co_await acceptor.async_accept(boost::asio::use_awaitable);
-		boost::asio::co_spawn(executor, echo(std::move(socket)), boost::asio::detached);
+		auto [error, socket] = co_await acceptor.async_accept(); 
+		if (socket.is_open())
+			boost::asio::co_spawn(executor, echo(std::move(socket)), boost::asio::detached);
 	}
 }
 
