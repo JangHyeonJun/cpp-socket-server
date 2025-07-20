@@ -1,3 +1,4 @@
+#include "share.h"
 #include <boost/asio.hpp>
 #include <iostream>
 #include <format>
@@ -73,8 +74,7 @@ uint16_t input_port(uint16_t default_port) {
 
 int main()
 {
-	constexpr uint16_t default_port = 12345;
-	auto port = input_port(default_port);
+	auto port = input_port(share::DefaultPort);
 	std::cout << "선택된 포트: " << port << std::endl;
 
 	try
