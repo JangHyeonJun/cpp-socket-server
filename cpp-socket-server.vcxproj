@@ -24,6 +24,7 @@
     <ProjectGuid>{92140565-5602-4587-b989-b0c5eadf238c}</ProjectGuid>
     <RootNamespace>cppsocketserver</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>boost-echo-server</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
