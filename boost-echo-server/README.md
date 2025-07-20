@@ -1,4 +1,4 @@
-# cpp-socket-server
+# boost-echo-server
 
 🎯 **Boost.Asio 기반 C++20 Echo Server**
 

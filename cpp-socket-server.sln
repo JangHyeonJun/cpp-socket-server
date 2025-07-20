@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36109.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "boost-echo-server", "cpp-socket-server.vcxproj", "{92140565-5602-4587-B989-B0C5EADF238C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "boost-echo-server", "boost-echo-server\boost-echo-server.vcxproj", "{92140565-5602-4587-B989-B0C5EADF238C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "socket-client", "..\socket-client\socket-client.vcxproj", "{19095468-3183-4298-A3CA-6C4B37E82D05}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "socket-server", "socket-server\socket-server.vcxproj", "{486FDFB2-3CCA-437E-A4FD-757105EC85AF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "socket-client", "socket-client\socket-client.vcxproj", "{19095468-3183-4298-A3CA-6C4B37E82D05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,14 @@ Global
 		{92140565-5602-4587-B989-B0C5EADF238C}.Release|x64.Build.0 = Release|x64
 		{92140565-5602-4587-B989-B0C5EADF238C}.Release|x86.ActiveCfg = Release|Win32
 		{92140565-5602-4587-B989-B0C5EADF238C}.Release|x86.Build.0 = Release|Win32
+		{486FDFB2-3CCA-437E-A4FD-757105EC85AF}.Debug|x64.ActiveCfg = Debug|x64
+		{486FDFB2-3CCA-437E-A4FD-757105EC85AF}.Debug|x64.Build.0 = Debug|x64
+		{486FDFB2-3CCA-437E-A4FD-757105EC85AF}.Debug|x86.ActiveCfg = Debug|Win32
+		{486FDFB2-3CCA-437E-A4FD-757105EC85AF}.Debug|x86.Build.0 = Debug|Win32
+		{486FDFB2-3CCA-437E-A4FD-757105EC85AF}.Release|x64.ActiveCfg = Release|x64
+		{486FDFB2-3CCA-437E-A4FD-757105EC85AF}.Release|x64.Build.0 = Release|x64
+		{486FDFB2-3CCA-437E-A4FD-757105EC85AF}.Release|x86.ActiveCfg = Release|Win32
+		{486FDFB2-3CCA-437E-A4FD-757105EC85AF}.Release|x86.Build.0 = Release|Win32
 		{19095468-3183-4298-A3CA-6C4B37E82D05}.Debug|x64.ActiveCfg = Debug|x64
 		{19095468-3183-4298-A3CA-6C4B37E82D05}.Debug|x64.Build.0 = Debug|x64
 		{19095468-3183-4298-A3CA-6C4B37E82D05}.Debug|x86.ActiveCfg = Debug|Win32
