@@ -1,75 +1,48 @@
-#include "share.h"
-#include <ctime>
+ï»¿#include "Server.h"
+
 #include <iostream>
 #include <string>
-#include <boost/asio.hpp>
+#include <cstdlib>
+#include <stdexcept>
 
-using boost::asio::ip::tcp;
-
-unsigned short get_port(int argc, char* argv[]) 
+namespace
 {
-    unsigned short port = share::DefaultPort;
+	unsigned short ParsePort(int argc, char* argv[],
+		unsigned short default_port = 12345) {
+		if (argc >= 2) {
+			try {
+				int parsed = std::stoi(argv[1]);
+				if (parsed < 1 || parsed > 65535) {
+					throw std::out_of_range("Port out of range");
+				}
 
-    // ¸í·ÉÇà ÀÎÀÚ°¡ ÀÖÀ» ¶§¸¸ ÆÄ½Ì ½Ãµµ
-    if (argc >= 2 && argv[1] && argv[1][0] != '\0') {
-        try {
-            port = static_cast<unsigned short>(std::stoi(argv[1]));
-            return port;
-        }
-        catch (...) {
-            std::cout << "¸í·ÉÇà ÀÎÀÚ Æ÷Æ®°ªÀÌ Àß¸øµÇ¾î ¹«½ÃÇÕ´Ï´Ù.\n";
-        }
-    }
+				return static_cast<unsigned short>(parsed);
+			}
+			catch (const std::exception& e) {
+				std::cerr << "[Main] Invalid port argument: " << e.what()
+					<< " â€” Using default port " << default_port << "\n";
+			}
+		}
 
-    // ¸í·ÉÇà ÀÎÀÚ°¡ ¾ø°Å³ª ÆÄ½Ì ½ÇÆÐ ½Ã ÀÔ·Â ¹Þ±â
-    std::cout << "¼­¹ö Æ÷Æ®¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä (default: " << share::DefaultPort << "): ";
-    std::string port_str;
-    std::getline(std::cin, port_str);
-    if (port_str.empty())
-        return share::DefaultPort;
-    try {
-        port = static_cast<unsigned short>(std::stoi(port_str));
-    }
-    catch (...) {
-        std::cout << "ÀÔ·ÂÀÌ ¿Ã¹Ù¸£Áö ¾Ê¾Æ ±âº»°ª(" << share::DefaultPort << ")À» »ç¿ëÇÕ´Ï´Ù.\n";
-        port = share::DefaultPort;
-    }
-
-    return port;
-}
-
-std::string make_daytime_string()
-{
-	using namespace std::chrono;
-	auto now = system_clock::now();
-	return std::format("{:%Y-%m-%d %H:%M:%S}", now);
+		return default_port;
+	}
 }
 
 int main(int argc, char* argv[])
 {
-	try
-	{
-		auto port = get_port(argc, argv);
+	try	{
+		unsigned short port = ParsePort(argc, argv);
+
 		boost::asio::io_context io_context;
-		tcp::acceptor acceptor(io_context, tcp::endpoint(tcp::v4(), port));
+		Server server(io_context, port);
 
-		for (;;)
-		{
-			tcp::socket socket(io_context);
-			acceptor.accept(socket);
-
-			std::string message = make_daytime_string();
-
-			boost::system::error_code ignored_error;
-			boost::asio::write(socket, boost::asio::buffer(message), ignored_error);
-		}
+		std::cout << "[Main] Server listening on port " << port << "...\n";
+		io_context.run();
 	}
-	catch (std::exception& e)
-	{
-		std::cout << std::format("Exception: {}\n", e.what());
+	catch (const std::exception& e) {
+		std::cerr << "[Main] Unhandled exception: " << e.what() << "\n";
+		return EXIT_FAILURE;
 	}
 
-	std::cout << "\n¾Æ¹« Å°³ª ´©¸£¸é Á¾·áÇÕ´Ï´Ù...";
-	std::cin.get();
 	return 0;
 }

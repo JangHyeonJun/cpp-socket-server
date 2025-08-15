@@ -1,4 +1,4 @@
-#include "share.h"
+ï»¿#include "share.h"
 #include <boost/asio.hpp>
 #include <iostream>
 #include <format>
@@ -53,20 +53,20 @@ boost::asio::awaitable<void> listener(boost::asio::ip::port_type port)
 }
 
 uint16_t input_port(uint16_t default_port) {
-	std::cout << "Æ÷Æ®¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä (default: " << default_port << "): ";
+	std::cout << "í¬íŠ¸ë²ˆí˜¸ë¥¼ ìž…ë ¥í•´ì£¼ì„¸ìš” (default: " << default_port << "): ";
 	std::string input;
 	std::getline(std::cin, input);
 
 	if (input.empty()) return default_port;
 
-	int value = default_port; // ÀÓ½Ã·Î int »ç¿ë (from_chars´Â ºÎÈ£ ÀÖ´Â Á¤¼ö ÆÄ½Ì)
+	int value = default_port; // ìž„ì‹œë¡œ int ì‚¬ìš© (from_charsëŠ” ë¶€í˜¸ ìžˆëŠ” ì •ìˆ˜ íŒŒì‹±)
 	auto [ptr, ec] = std::from_chars(input.data(), input.data() + input.size(), value);
 
 	if (ec == std::errc() && value >= 0 && value <= 65535) {
 		return static_cast<uint16_t>(value);
 	}
 	else {
-		std::cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ±âº»°ª(" << default_port << ") »ç¿ë\n";
+		std::cout << "ìž˜ëª»ëœ ìž…ë ¥ìž…ë‹ˆë‹¤. ê¸°ë³¸ê°’(" << default_port << ") ì‚¬ìš©\n";
 		return default_port;
 	}
 }
@@ -75,7 +75,7 @@ uint16_t input_port(uint16_t default_port) {
 int main()
 {
 	auto port = input_port(share::DefaultPort);
-	std::cout << "¼±ÅÃµÈ Æ÷Æ®: " << port << std::endl;
+	std::cout << "ì„ íƒëœ í¬íŠ¸: " << port << std::endl;
 
 	try
 	{
