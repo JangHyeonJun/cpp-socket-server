@@ -27,6 +27,9 @@ void Session::DoRead() {
             if (!ec) {
                 std::string received(read_buffer_.data(), length);
                 std::cout << "[Session] Received: " << received << "\n";
+                
+                Send(received + '\n'); // echo
+                
                 DoRead();
             }
             else {

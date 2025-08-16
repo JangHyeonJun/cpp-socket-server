@@ -1,84 +1,44 @@
+ï»¿#include "Client.h"
+
 #include <boost/asio.hpp>
-#include <array>
-#include <format>
 #include <iostream>
+#include <string>
+
 using boost::asio::ip::tcp;
-
-
-std::string get_host(int argc, char* argv[]) {
-	if (argc >= 2 && argv[1] && argv[1][0] != '\0') {
-		return argv[1];
-	}
-	std::cout << "¼­¹ö È£½ºÆ®¸¦ ÀÔ·ÂÇÏ¼¼¿ä (default: " << share::DefaultHost << "): ";
-	std::string host;
-	std::getline(std::cin, host);
-	if (host.empty())
-		return share::DefaultHost;
-	return host;
-}
-
-unsigned short get_port(int argc, char* argv[]) {
-	if (argc >= 3 && argv[2] && argv[2][0] != '\0') {
-		try {
-			return static_cast<unsigned short>(std::stoi(argv[2]));
-		}
-		catch (...) {}
-	}
-	std::cout << "¼­¹ö Æ÷Æ®¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä (default: " << share::DefaultPort << "): ";
-	std::string port_str;
-	std::getline(std::cin, port_str);
-	if (port_str.empty())
-		return share::DefaultPort;
-	try {
-		return static_cast<unsigned short>(std::stoi(port_str));
-	}
-	catch (...) {
-		std::cout << "ÀÔ·ÂÀÌ ¿Ã¹Ù¸£Áö ¾Ê¾Æ ±âº»°ª(" << share::DefaultPort << ")À» »ç¿ëÇÕ´Ï´Ù.\n";
-		return share::DefaultPort;
-	}
-}
-
-void get_time_now(int argc, char* argv[])
-{
-	auto host = get_host(argc, argv);
-	auto port = get_port(argc, argv);
-
-	boost::asio::io_context io_context;
-	tcp::resolver resolver(io_context);
-
-	tcp::resolver::results_type endpoints = resolver.resolve(host, std::to_string(port));
-	tcp::socket socket(io_context);
-	boost::asio::connect(socket, endpoints);
-
-	for (;;)
-	{
-		std::array<char, 128> buf;
-		boost::system::error_code error;
-
-		size_t len = socket.read_some(boost::asio::buffer(buf), error);
-		if (error == boost::asio::error::eof)
-			break; // Connect close by peer
-		else if (error)
-			throw boost::system::system_error(error); // Error
-
-		std::cout.write(buf.data(), len);
-		std::cout << std::endl;
-	}
-}
 
 int main(int argc, char* argv[])
 {
-	try
-	{
-		for (;;)
-			get_time_now(argc, argv);
+	try	{
+        const std::string host = (argc >= 2) ? argv[1] : "127.0.0.1";
+        const unsigned short port = (argc >= 3)
+            ? static_cast<unsigned short>(std::stoi(argv[2]))
+            : 12345;
 
-		std::cout << "\n¾Æ¹« Å°³ª ´©¸£¸é Á¾·áÇÕ´Ï´Ù...";
-		std::cin.get();
-		return 0;
+
+        boost::asio::io_context io_context;
+
+        auto client = std::make_shared<Client>(io_context);
+        client->Connect(host, port);
+
+        std::cout << "[Main] Connecting to " << host << ":" << port << "...\n";
+
+        // ì…ë ¥ ì²˜ë¦¬ìš© ìŠ¤ë ˆë“œ ì¶”ê°€
+        std::thread input_thread([&client]() {
+            std::string line;
+            while (std::getline(std::cin, line)) {
+                client->Send(line);
+            }
+            });
+
+        // I/O ì´ë²¤íŠ¸ ë£¨í”„ ì‹¤í–‰
+        io_context.run();
+
+        // ì…ë ¥ ì²˜ë¦¬ ìŠ¤ë ˆë“œ ëŒ€ê¸°
+        input_thread.join();
 	}
-	catch (std::exception& e)
-	{
-		std::cout << std::format("Exception: {}\n", e.what());
-	}
+    catch (const std::exception& e) {
+        std::cerr << "[Main] Exception: " << e.what() << "\n";
+    }
+    
+    return 0;
 }

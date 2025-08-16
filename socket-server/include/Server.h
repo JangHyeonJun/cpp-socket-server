@@ -8,6 +8,8 @@ public:
 
 private:
     void DoAccept();
+    void DoRead();
+    void DoWrite(const std::string& message);
 
     boost::asio::ip::tcp::acceptor acceptor_;
 };
