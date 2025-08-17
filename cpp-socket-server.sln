@@ -5,9 +5,9 @@ VisualStudioVersion = 17.14.36109.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "boost-echo-server", "boost-echo-server\boost-echo-server.vcxproj", "{92140565-5602-4587-B989-B0C5EADF238C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "socket-server", "socket-server\socket-server.vcxproj", "{486FDFB2-3CCA-437E-A4FD-757105EC85AF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "server\server.vcxproj", "{486FDFB2-3CCA-437E-A4FD-757105EC85AF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "socket-client", "socket-client\socket-client.vcxproj", "{19095468-3183-4298-A3CA-6C4B37E82D05}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "client\client.vcxproj", "{19095468-3183-4298-A3CA-6C4B37E82D05}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "common", "common\common.vcxproj", "{43D273FC-E6A2-441E-9458-A88AA01B7234}"
 EndProject
