@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "client\client.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "common", "common\common.vcxproj", "{43D273FC-E6A2-441E-9458-A88AA01B7234}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "packet_generator", "packet_generator\packet_generator.vcxproj", "{C6CC226E-CF86-4633-8F64-CAEB8424BC2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{43D273FC-E6A2-441E-9458-A88AA01B7234}.Release|x64.Build.0 = Release|x64
 		{43D273FC-E6A2-441E-9458-A88AA01B7234}.Release|x86.ActiveCfg = Release|Win32
 		{43D273FC-E6A2-441E-9458-A88AA01B7234}.Release|x86.Build.0 = Release|Win32
+		{C6CC226E-CF86-4633-8F64-CAEB8424BC2F}.Debug|x64.ActiveCfg = Debug|x64
+		{C6CC226E-CF86-4633-8F64-CAEB8424BC2F}.Debug|x64.Build.0 = Debug|x64
+		{C6CC226E-CF86-4633-8F64-CAEB8424BC2F}.Debug|x86.ActiveCfg = Debug|Win32
+		{C6CC226E-CF86-4633-8F64-CAEB8424BC2F}.Debug|x86.Build.0 = Debug|Win32
+		{C6CC226E-CF86-4633-8F64-CAEB8424BC2F}.Release|x64.ActiveCfg = Release|x64
+		{C6CC226E-CF86-4633-8F64-CAEB8424BC2F}.Release|x64.Build.0 = Release|x64
+		{C6CC226E-CF86-4633-8F64-CAEB8424BC2F}.Release|x86.ActiveCfg = Release|Win32
+		{C6CC226E-CF86-4633-8F64-CAEB8424BC2F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

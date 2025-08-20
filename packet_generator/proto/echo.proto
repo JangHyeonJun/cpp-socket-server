@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package pkt;
+
+service Gateway {
+  rpc Send (Packet) returns (Packet);
+}
+
+message Packet {
+  string type = 1;
+  string payload = 2;
+}
